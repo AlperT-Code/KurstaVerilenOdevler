@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hesapla() {
+  let maas1 = parseFloat(prompt("Birinci yöneticinin satış miktarını girin:"));
+  let maas2 = parseFloat(prompt("İkinci yöneticinin satış miktarını girin:"));
+  let maas3 = parseFloat(prompt("Üçüncü yöneticinin satış miktarını girin:"));
+
+  function calculateSalary(fiyat) {
+    let maas = 200;
+    if (fiyat <= 500) {
+      maas += fiyat * 0.03;
+    } else if (fiyat <= 1000) {
+      maas += fiyat * 0.05;
+    } else {
+      maas += fiyat * 0.08;
+    }
+    return maas;
+  }
+
+  let salary1 = calculateSalary(maas1);
+  let salary2 = calculateSalary(maas2);
+  let salary3 = calculateSalary(maas3);
+
+  let salaries = [salary1, salary2, salary3];
+  let maxSalary = Math.max(...salaries);
+  let bestManagerIndex = salaries.indexOf(maxSalary);
+
+  alert(`Birinci yönetici maaşı: ${salary1} USD`);
+  alert(`İkinci yönetici maaşı: ${salary2} USD`);
+  alert(`Üçüncü yönetici maaşı: ${salary3} USD`);
+  alert(`En iyi yönetici: Yönetici ${bestManagerIndex + 1}`);
+  alert(`En iyi yöneticinin maaşı (200$ prim dahil): ${maxSalary + 200} USD`);
+}
+
+hesapla();
+
+    </script>
+</body>
+</html>

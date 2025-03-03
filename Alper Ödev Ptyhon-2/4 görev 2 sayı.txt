@@ -1,0 +1,17 @@
+sayi1 = int(input("Birinci sayiyi giriniz: "))
+sayi2 = int(input("İkinci sayıyı giriniz: "))
+print(f"{sayi1} ile {sayi2} arasındaki 5 e tam bölünen sayılar: ")
+for sayi in range (sayi1 ,sayi2 +1):
+  if sayi % 5 == 0:
+    print(sayi)
+print(f"{sayi1} ile {sayi2} arasındaki 7'nin katları: ")
+for sayi in range (sayi1 ,sayi2 +1):
+  if sayi % 7 == 0:
+    print(sayi) 
+print(f"{sayi1} ile {sayi2} arasındaki tüm sayılar: ")
+for sayi in range (sayi1 ,sayi2 +1):
+  if sayi % 1 == 0:
+    print(sayi)
+print(f"{sayi1} ile {sayi2} arasındaki tüm sayılar (azalan sırada):")
+for sayi in range(sayi2, sayi1 - 1, -1):
+    print(sayi)

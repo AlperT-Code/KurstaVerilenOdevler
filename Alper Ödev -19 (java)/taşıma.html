@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boyut Değiştiren Metin Bloğu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #333;
+        }
+        .resizeable-box {
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            border: 2px solid #444;
+            background-color: #444;
+            position: relative;
+            overflow: hidden;
+        }
+        .resize-handle {
+            width: 15px;
+            height: 15px;
+            background-color: #555;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            cursor: se-resize;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Metin Bloğunun Boyutunu Değiştir</h1>
+    <div class="resizeable-box" id="resizeableBox">
+        <p>Bu metin bloğunun boyutunu sağ alt köşeden tutarak değiştirebilirsiniz. Fareyi sağ alt köşeye sürükleyin.</p>
+        <div class="resize-handle" id="resizeHandle"></div>
+    </div>
+
+    <script>
+        const resizeableBox = document.getElementById("resizeableBox");
+        const resizeHandle = document.getElementById("resizeHandle");
+
+        let isResizing = false;
+
+        
+        resizeHandle.addEventListener("mousedown", (e) => {
+            isResizing = true;
+            document.body.style.cursor = "se-resize"; 
+
+            // Mouse hareketini takip et
+            document.addEventListener("mousemove", resize);
+            document.addEventListener("mouseup", () => {
+                isResizing = false;
+                document.body.style.cursor = "default"; 
+                document.removeEventListener("mousemove", resize); 
+            });
+        });
+
+    
+        function resize(e) {
+            if (!isResizing) return;
+
+            const width = e.clientX - resizeableBox.offsetLeft;
+            const height = e.clientY - resizeableBox.offsetTop;
+
+          
+            if (width > 100) {
+                resizeableBox.style.width = width + "px";
+            }
+            if (height > 100) {
+                resizeableBox.style.height = height + "px";
+            }
+        }
+    </script>
+
+</body>
+</html>

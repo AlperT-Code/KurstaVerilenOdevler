@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Dönüştürücü</title>
+    <script>
+        
+        function zamaniSaniyeyeDonustur(saat, dakika, saniye) {
+            return saat * 3600 + dakika * 60 + saniye;
+        }
+
+        
+        function saniyeyiZamanaDonustur(saniye) {
+            const saat = Math.floor(saniye / 3600);
+            saniye %= 3600;
+            const dakika = Math.floor(saniye / 60);
+            saniye %= 60;
+            return String(saat).padStart(2, '0') + ":" + 
+                   String(dakika).padStart(2, '0') + ":" + 
+                   String(saniye).padStart(2, '0');
+        }
+
+        
+        function zamaniSaniyeyeGoster() {
+            const saat = parseInt(document.getElementById("saat").value);
+            const dakika = parseInt(document.getElementById("dakika").value);
+            const saniye = parseInt(document.getElementById("saniye").value);
+
+            if (isNaN(saat) || isNaN(dakika) || isNaN(saniye)) {
+                document.getElementById("sonuc1").textContent = "Lütfen geçerli değerler girin.";
+                return;
+            }
+
+            const toplamSaniye = zamaniSaniyeyeDonustur(saat, dakika, saniye);
+            document.getElementById("sonuc1").textContent = "Toplam Saniye: " + toplamSaniye;
+        }
+
+        // İkinci fonksiyonu kullanarak sonucu gösteren fonksiyon
+        function saniyeyiZamanaGoster() {
+            const saniye = parseInt(document.getElementById("girisSaniye").value);
+
+            if (isNaN(saniye) || saniye < 0) {
+                document.getElementById("sonuc2").textContent = "Lütfen geçerli bir saniye değeri girin.";
+                return;
+            }
+
+            const zamanFormatli = saniyeyiZamanaDonustur(saniye);
+            document.getElementById("sonuc2").textContent = "Saat:Dakika:Saniye - " + zamanFormatli;
+        }
+    </script>
+</head>
+<body>
+    <h2>Zamanı Saniyeye Dönüştür</h2>
+    <label for="saat">Saat:</label>
+    <input type="number" id="saat" min="0">
+    <label for="dakika">Dakika:</label>
+    <input type="number" id="dakika" min="0">
+    <label for="saniye">Saniye:</label>
+    <input type="number" id="saniye" min="0">
+    <button onclick="zamaniSaniyeyeGoster()">Saniyeye Dönüştür</button>
+    <p id="sonuc1"></p>
+
+    <h2>Saniyeyi Saat:Dakika:Saniye Formatına Dönüştür</h2>
+    <label for="girisSaniye">Saniye:</label>
+    <input type="number" id="girisSaniye" min="0">
+    <button onclick="saniyeyiZamanaGoster()">Zamana Dönüştür</button>
+    <p id="sonuc2"></p>
+</body>
+</html>

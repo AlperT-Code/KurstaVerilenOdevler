@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(255, 255, 255);
+}
+.box {
+    width: 500px;
+    height: 400px;
+    margin: 20px;
+    background-color:rgb(249,250,210,255) ;
+}
+img{
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+   
+}
+img:hover {
+    transform: translate(-100px,-100px);
+        -webkit-transform: translate(-150px,-100px);
+}
+#img2{
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+}
+#img2:hover {
+    transform: translate(160px,120px);
+    -webkit-transform:translate(160px,120px);
+}
+#img3{
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+   
+}
+#img3:hover {
+    transform: translate(120px,-10px);
+    -webkit-transform:translate (15px,10px);}
+    #img4{
+        transition: all .6s ease-in-out;
+        cursor: pointer;
+       
+    }
+    #img4:hover {
+        transform: translate(120px,1px);
+        -webkit-transform:translate (10px,50px);}
+        #img5{
+            transition: all .4s ease-in-out;
+            cursor: pointer;
+           
+        }
+        #img5:hover {
+            transform: translate(-100px,-10px);
+        -webkit-transform: translate(-100px,-20px);
+      
+}

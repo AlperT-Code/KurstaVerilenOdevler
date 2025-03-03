@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Grafik Düzenleyici</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #333;
+      color: #fff;
+    }
+
+    #controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #controls select,
+    #controls input {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    #controls select {
+      background: #fff;
+      color: #333;
+    }
+
+    #controls input {
+      background: #fff;
+    }
+
+    #canvas {
+      width: 80%;
+      height: 70%;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.5;
+    }
+
+    .shape.final {
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <select id="shape-selector">
+      <option value="circle">Daire</option>
+      <option value="square">Kare</option>
+      <option value="rectangle">Dikdörtgen</option>
+      <option value="triangle">Üçgen</option>
+    </select>
+    <input type="color" id="color-picker" value="#ff0000">
+  </div>
+  <div id="canvas"></div>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const shapeSelector = document.getElementById("shape-selector");
+    const colorPicker = document.getElementById("color-picker");
+
+    let isDrawing = false;
+    let startX, startY;
+    let tempShape = null;
+
+    canvas.addEventListener("mousedown", (event) => {
+      isDrawing = true;
+      startX = event.offsetX;
+      startY = event.offsetY;
+
+      // Geçici şekil oluşturuluyor
+      tempShape = document.createElement("div");
+      tempShape.classList.add("shape");
+      tempShape.style.backgroundColor = colorPicker.value;
+      tempShape.style.position = "absolute";
+
+      canvas.appendChild(tempShape);
+    });
+
+    canvas.addEventListener("mousemove", (event) => {
+      if (!isDrawing || !tempShape) return;
+
+      const endX = event.offsetX;
+      const endY = event.offsetY;
+      const width = Math.abs(endX - startX);
+      const height = Math.abs(endY - startY);
+
+      // Şeklin dinamik olarak çizilmesi
+      switch (shapeSelector.value) {
+        case "circle":
+          const diameter = Math.max(width, height);
+          tempShape.style.width = `${diameter}px`;
+          tempShape.style.height = `${diameter}px`;
+          tempShape.style.borderRadius = "50%";
+          break;
+        case "square":
+          const side = Math.max(width, height);
+          tempShape.style.width = `${side}px`;
+          tempShape.style.height = `${side}px`;
+          break;
+        case "rectangle":
+          tempShape.style.width = `${width}px`;
+          tempShape.style.height = `${height}px`;
+          break;
+        case "triangle":
+          tempShape.style.width = "0";
+          tempShape.style.height = "0";
+          tempShape.style.borderLeft = `${width / 2}px solid transparent`;
+          tempShape.style.borderRight = `${width / 2}px solid transparent`;
+          tempShape.style.borderBottom = `${height}px solid ${colorPicker.value}`;
+          break;
+      }
+
+      const left = Math.min(Math.max(0, Math.min(startX, endX)), canvas.clientWidth - tempShape.offsetWidth);
+      const top = Math.min(Math.max(0, Math.min(startY, endY)), canvas.clientHeight - tempShape.offsetHeight);
+
+      tempShape.style.left = `${left}px`;
+      tempShape.style.top = `${top}px`;
+    });
+
+    canvas.addEventListener("mouseup", (event) => {
+      if (!isDrawing || !tempShape) return;
+      isDrawing = false;
+
+      // Şekil tamamlandığında opacity 1'e set edilir
+      tempShape.classList.add("final");
+
+      // Geçici şekil yerine gerçek şekil oluşturulur
+      const finalShape = tempShape.cloneNode(true);
+      finalShape.classList.remove("shape");
+      canvas.appendChild(finalShape);
+
+      // Geçici şekli kaldır
+      canvas.removeChild(tempShape);
+      tempShape = null;
+    });
+  </script>
+</body>
+</html>

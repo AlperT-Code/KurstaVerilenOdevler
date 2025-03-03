@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+</head>
+<body>
+    <form onsubmit="calculateFibonacci(event)">
+        <label for="position">Sıra numarasını girin:</label>
+        <input type="number" id="position" name="position" min="1" required>
+        <button type="submit">Hesapla</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        function calculateFibonacci(event) {
+            event.preventDefault(); 
+            const n = parseInt(document.getElementById("position").value);
+            if (n <= 0) {
+                document.getElementById("result").innerText = "Geçersiz giriş";
+                return;
+            }
+
+            let a = 1, b = 1;
+            for (let i = 3; i <= n; i++) {
+                [a, b] = [b, a + b];
+            }
+
+            document.getElementById("result").innerText = `${n}. sıradaki Fibonacci sayısı: ${b}`;
+        }
+    </script>
+</body>
+</html>

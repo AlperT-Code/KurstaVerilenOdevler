@@ -1,0 +1,10 @@
+sayi1 = int(input("Birinci sayiyi giriniz: "))
+sayi2 = int(input("İkinci sayıyı giriniz: "))
+print(f"{sayi1} ile {sayi2} ne kadar 3 e bölünen varsa o kadar Fizz yazdırma: ")
+for sayi in range (sayi1 ,sayi2 +1):
+  if sayi % 3 == 0:
+    print("Fizz")
+print(f"{sayi1} ile {sayi2} ne kadar 5 e bölünen varsa o kadar AlperT. yazdırma: ")
+for sayi in range (sayi1 ,sayi2 +1):
+  if sayi % 5 == 0:
+    print("AlperT.")    

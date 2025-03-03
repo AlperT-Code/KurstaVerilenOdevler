@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çift veya Tek Sayıları Yazdır</title>
+    <script>
+        function sayilariYazdir() {
+            const baslangic = parseInt(document.getElementById("baslangic").value);
+            const bitis = parseInt(document.getElementById("bitis").value);
+            const ciftMi = document.getElementById("ciftMi").checked;
+
+            if (isNaN(baslangic) || isNaN(bitis)) {
+                document.getElementById("sonuc").textContent = "Lütfen geçerli bir aralık girin.";
+                return;
+            }
+
+            let sonuc = [];
+            for (let i = baslangic; i <= bitis; i++) {
+                if (ciftMi && i % 2 === 0) {
+                    sonuc.push(i);
+                } else if (!ciftMi && i % 2 !== 0) {
+                    sonuc.push(i);
+                }
+            }
+
+            document.getElementById("sonuc").textContent = 
+                (ciftMi ? "Çift" : "Tek") + " sayılar: " + sonuc.join(", ");
+        }
+    </script>
+</head>
+<body>
+    <h2>Çift veya Tek Sayıları Yazdır</h2>
+    <label for="baslangic">Başlangıç:</label>
+    <input type="number" id="baslangic" required>
+    <br><br>
+    <label for="bitis">Bitiş:</label>
+    <input type="number" id="bitis" required>
+    <br><br>
+    <label for="ciftMi">Çift Sayıları Yazdır</label>
+    <input type="checkbox" id="ciftMi">
+    <br><br>
+    <button onclick="sayilariYazdir()">Yazdır</button>
+    <p id="sonuc"></p>
+</body>
+</html>

@@ -1,0 +1,63 @@
+
+body{
+    background: url(360_F_562815933_7IqAwHazoAbos1FI2RG2XI0sE41GyLlR.jpg);
+    width:100%; 
+    height: 100%;
+    background-size: cover;
+}
+.sidebar {
+    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 63px;
+    height: 100%;
+    
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(17px);
+    --webkit-backdrop-filter: blur(17px);
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    transition: width 0.3s ease;
+}
+.sidebar:hover {
+    width: 150px;
+}
+
+.links li {
+    display: flex;
+    border-radius: 4px;
+    align-items: center;
+}
+.links li:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+.links li span {
+    padding: 55px 3px;
+}
+.links li a {
+    padding: 10px;
+    color: #000;
+    display: none;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.sidebar:hover .links li a {
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

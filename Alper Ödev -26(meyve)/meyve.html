@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List Sort</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-group select, .form-group button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .product-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            width: 120px;
+        }
+        .product-card span {
+            display: block;
+            font-size: 14px;
+            color: #555;
+        }
+        .product-card .price {
+            font-size: 16px;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Market</h1>
+    <div class="container">
+        <div class="form-group">
+            <select id="sortType">
+                <option value="id">ID ye göre sırala</option>
+                <option value="price">Fiyata göre sırala</option>
+            </select>
+            <button onclick="sortProducts()">Sırala</button>
+        </div>
+        <div class="product-list" id="productList">
+          
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "APPLE", price: 1.025 },
+            { id: 2, name: "PEAR", price: 1.525 },
+            { id: 3, name: "BANANA", price: 2.0 },
+            { id: 4, name: "MANGO", price: 5.6 },
+            { id: 5, name: "ORANGE", price: 2.355 },
+            { id: 6, name: "LIME", price: 3.9 },
+            { id: 7, name: "APRICOT", price: 4.1 },
+            { id: 8, name: "AVOCADO", price: 5.905 },
+            { id: 9, name: "PAPAYA", price: 7.0 },
+            { id: 10, name: "RASPBERRY", price: 4.6 },
+            { id: 11, name: "LEMON", price: 3.455 },
+        ];
+
+        function displayProducts(productArray) {
+            const productList = document.getElementById("productList");
+            productList.innerHTML = ""; 
+            productArray.forEach(product => {
+                const productCard = document.createElement("div");
+                productCard.className = "product-card";
+                productCard.innerHTML = `
+                    <span>#${product.id}</span>
+                    <strong>${product.name}</strong>
+                    <span class="price">${product.price.toFixed(3)}$</span>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        function sortProducts() {
+            const sortType = document.getElementById("sortType").value;
+
+            if (sortType === "id") {
+                products.sort((a, b) => a.id - b.id);
+            } else if (sortType === "price") {
+                products.sort((a, b) => a.price - b.price); 
+            }
+
+            displayProducts(products); 
+        }
+
+        
+        window.onload = () => {
+            displayProducts(products);
+        };
+    </script>
+</body>
+</html>

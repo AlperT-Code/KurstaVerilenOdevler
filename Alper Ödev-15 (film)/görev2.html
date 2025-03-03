@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenişletString Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .output {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>GenişletString Sınıfı Testi</h1>
+  <p>Dize: <span id="currentString"></span></p>
+  <div>
+    <label for="operation">Operasyon:</label>
+    <select id="operation">
+      <option value="remove">remove(index)</option>
+      <option value="insert">insert(index, sign)</option>
+      <option value="trimSign">trimSign()</option>
+      <option value="toggle">toggle()</option>
+      <option value="counter">counter(sign)</option>
+    </select>
+  </div>
+  <div id="inputs">
+    <label for="index">Index:</label>
+    <input type="number" id="index" />
+    <label for="sign">Sembol:</label>
+    <input type="text" id="sign" maxlength="1" />
+  </div>
+  <button id="execute">Çalıştır</button>
+  <div class="output">
+    <strong>Sonuç:</strong>
+    <p id="output"></p>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    class GenişletString {
+  constructor(initialString) {
+    this.string = initialString;
+  }
+
+  remove(index) {
+    if (index >= 0 && index < this.string.length) {
+      this.string = this.string.slice(0, index) + this.string.slice(index + 1);
+    }
+  }
+
+  insert(index, sign) {
+    if (index < 0) {
+      this.string = sign + this.string;
+    } else if (index >= this.string.length) {
+      this.string += sign;
+    } else {
+      this.string = this.string.slice(0, index) + sign + this.string.slice(index);
+    }
+  }
+
+  trimSign() {
+    this.string = this.string.replace(/(.)\1+/g, "$1");
+  }
+
+  toggle() {
+    this.string = [...this.string]
+      .map((char) =>
+        char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()
+      )
+      .join("");
+  }
+
+  counter(sign) {
+    return [...this.string].filter((char) => char === sign).length;
+  }
+}
+
+
+const genişletString = new GenişletString("aaBBccDD");
+
+
+const currentStringElem = document.getElementById("currentString");
+const operationSelect = document.getElementById("operation");
+const indexInput = document.getElementById("index");
+const signInput = document.getElementById("sign");
+const executeButton = document.getElementById("execute");
+const outputElem = document.getElementById("output");
+
+
+const updateStringDisplay = () => {
+  currentStringElem.textContent = genişletString.string;
+};
+updateStringDisplay();
+
+
+operationSelect.addEventListener("change", () => {
+  const operation = operationSelect.value;
+  indexInput.style.display = ["remove", "insert"].includes(operation) ? "inline-block" : "none";
+  signInput.style.display = ["insert", "counter"].includes(operation) ? "inline-block" : "none";
+});
+
+
+executeButton.addEventListener("click", () => {
+  const operation = operationSelect.value;
+  const index = parseInt(indexInput.value, 10);
+  const sign = signInput.value;
+
+  try {
+    let result;
+    switch (operation) {
+      case "remove":
+        genişletString.remove(index);
+        break;
+      case "insert":
+        genişletString.insert(index, sign);
+        break;
+      case "trimSign":
+        genişletString.trimSign();
+        break;
+      case "toggle":
+        genişletString.toggle();
+        break;
+      case "counter":
+        result = genişletString.counter(sign);
+        outputElem.textContent = `Sembol "${sign}" sayısı: ${result}`;
+        return;
+      default:
+        throw new Error("Geçersiz operasyon.");
+    }
+
+    
+    updateStringDisplay();
+    outputElem.textContent = `Operasyon "${operation}" başarıyla tamamlandı.`;
+  } catch (error) {
+    outputElem.textContent = `Hata: ${error.message}`;
+  }
+});
+
+  </script>
+</body>
+</html>

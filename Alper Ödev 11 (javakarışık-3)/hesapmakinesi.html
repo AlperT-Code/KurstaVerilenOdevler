@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>hesapmakinesi</title>
+</head>
+<body>
+   
+    <h1 style="font-size: 30px;text-align: center;"><b>Hesap Makinesi 
+        </h1><hr width="100%">
+        <br>
+        <br>
+        <br>
+    <div class="calculator">
+        </b>
+        <br>
+        <br>
+    </div>
+    <div class="box">
+        <input style="padding-left: 143px;" type="text" id="display" disabled>
+
+
+        <div>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="clearDisplay()">C</button>
+
+        </div>
+        <div>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('*')">*</button>
+        </div>
+        <div>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('-')">-</button>
+        </div>
+        <div>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('Math.sqrt')">√</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="appendToDisplay('+')">+</button>
+        </div>
+        <div>
+            <button onclick="appendToDisplay('Math.sin(')">sin</button>
+            <button onclick="appendToDisplay('Math.cos(')">cos</button>
+            <button onclick="appendToDisplay('Math.tan(')">tan</button>
+            <button onclick="appendToDisplay('1/Math.tan(')">cot</button>
+        </div>
+        <div>
+            <button onclick="appendToDisplay('Math.factorial(')">n!</button>
+            <button onclick="appendToDisplay('Math.log(')">log</button>
+            <button onclick="appendToDisplay('**2')">x²</button>
+            <button onclick="appendToDisplay('**3')">x³</button>
+            <br>
+        </div>
+    </div>
+    </div>
+    <script>
+const themeToggleBtn = document.getElementById('theme-toggle');
+            themeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+            });
+            document.getElementById("navToggle").addEventListener("click", function() {
+    const nav = document.getElementById("nav");
+    nav.style.display = "block";
+});
+
+document.getElementById("navClose").addEventListener("click", function() {
+    const nav = document.getElementById("nav");
+    nav.style.display = "none";
+});
+
+Math.factorial = function (n) {
+                if (n < 0) return undefined;
+                if (n === 0) return 1; // 0! = 1
+                return n * Math.factorial(n - 1);
+            };
+
+            function appendToDisplay(value) {
+                document.getElementById('display').value += value;
+            }
+
+            function clearDisplay() {
+                document.getElementById('display').value = '';
+            }
+
+            function calculateResult() {
+                const display = document.getElementById('display');
+                try {
+                    display.value = eval(display.value.replace(/\*\*/g, '^'));
+                } catch (e) {
+                    display.value = 'Hata';
+                }
+            }
+    </script>
+      <style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(255, 255, 255); 
+    color: rgb(0, 0, 0); 
+    padding: 20px;
+    transition: 0.3s all;
+}
+
+
+
+
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30%;
+    border: none;
+    background-color: white; 
+    color: black; 
+    cursor: pointer;
+    margin: 10px 0; 
+    width: 30px;
+}
+
+
+
+
+#display {
+    width: 350px;
+    height: 50px;
+    font-size: 24px;
+    text-align: right;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+button {
+    width: 90px;
+    height: 50px;
+    font-size: 16px;
+    margin-right: 5px; 
+    cursor: pointer;
+    background-color: #bfbfbf;
+    text-align: center;
+}
+.box{
+    background-color:#cac9c9;
+    width: 500px;
+    height: 500px;
+    border-radius: 20px;
+}
+
+
+    </style>
+</body>
+</html>

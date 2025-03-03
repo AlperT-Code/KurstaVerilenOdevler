@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayı İşlemleri</title>
+    <script>
+        function sayilariTopla() {
+            const sayilar = [
+                parseInt(document.getElementById("sayi1").value),
+                parseInt(document.getElementById("sayi2").value),
+                parseInt(document.getElementById("sayi3").value),
+                parseInt(document.getElementById("sayi4").value),
+                parseInt(document.getElementById("sayi5").value)
+            ];
+
+            const toplam = sayilar.reduce((acc, sayi) => acc + (isNaN(sayi) ? 0 : sayi), 0);
+            document.getElementById("toplamSonuc").textContent = "Toplam: " + toplam;
+        }
+
+        function enBuyukSayi() {
+            const sayilar = [
+                parseInt(document.getElementById("sayi1").value),
+                parseInt(document.getElementById("sayi2").value),
+                parseInt(document.getElementById("sayi3").value),
+                parseInt(document.getElementById("sayi4").value),
+                parseInt(document.getElementById("sayi5").value)
+            ];
+
+            const enBuyuk = Math.max(...sayilar.filter(sayi => !isNaN(sayi)));
+            document.getElementById("buyukSonuc").textContent = "En Büyük Sayı: " + enBuyuk;
+        }
+    </script>
+</head>
+<body>
+    <h2>1 ila 5 Arasında Sayıların Toplamını Bul</h2>
+    <label for="sayi1">Sayı 1:</label>
+    <input type="number" id="sayi1" min="1" max="5">
+    <br><br>
+    <label for="sayi2">Sayı 2:</label>
+    <input type="number" id="sayi2" min="1" max="5">
+    <br><br>
+    <label for="sayi3">Sayı 3:</label>
+    <input type="number" id="sayi3" min="1" max="5">
+    <br><br>
+    <label for="sayi4">Sayı 4:</label>
+    <input type="number" id="sayi4" min="1" max="5">
+    <br><br>
+    <label for="sayi5">Sayı 5:</label>
+    <input type="number" id="sayi5" min="1" max="5">
+    <br><br>
+    <button onclick="sayilariTopla()">Toplamı Hesapla</button>
+    <p id="toplamSonuc"></p>
+
+    <h2>1 ila 5 Arasında Sayıların En Büyüğünü Bul</h2>
+    <button onclick="enBuyukSayi()">En Büyük Sayıyı Bul</button>
+    <p id="buyukSonuc"></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+</head>
+<body>
+    <form onsubmit="calculateDigitSum(event)">
+        <label for="number">Bir sayı girin:</label>
+        <input type="number" id="number" name="number" required>
+        <button type="submit">Toplamı Hesapla</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        function calculateDigitSum(event) {
+            event.preventDefault(); 
+            const number = document.getElementById("number").value;
+
+           
+            const sum = Array.from(number, Number).reduce((acc, digit) => acc + digit, 0);
+            
+            document.getElementById("result").innerText = `Basamakların Toplamı: ${sum}`;
+        }
+    </script>
+</body>
+</html>

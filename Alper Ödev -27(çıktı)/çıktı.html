@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     
+class Element {
+  constructor(tagName) {
+    this.tagName = tagName;
+    this.id = '';
+    this.className = '';
+    this.content = '';
+    this.children = [];
+  }
+
+  setId(id) {
+    this.id = id;
+    return this;
+  }
+
+  addClass(cssClass) {
+    this.className = cssClass;
+    return this;
+  }
+
+  setContent(text) {
+    this.content = text;
+    return this;
+  }
+
+  addChild(child) {
+    this.children.push(child);
+    return this;
+  }
+
+  print() {
+    let childrenHtml = this.children.map(child => child.print()).join('');
+    return `<${this.tagName} id="${this.id}" class="${this.className}">${this.content}${childrenHtml}</${this.tagName}>`;
+  }
+}
+
+
+class DomBuilder {
+  constructor() {
+    this.element = null;
+  }
+
+  create(tagName) {
+    this.element = new Element(tagName);
+    return this;
+  }
+
+  withClass(className) {
+    this.element.addClass(className);
+    return this;
+  }
+
+  withId(idName) {
+    this.element.setId(idName);
+    return this;
+  }
+
+  withChild(childElem) {
+    this.element.addChild(childElem);
+    return this;
+  }
+
+  withContent(text) {
+    this.element.setContent(text);
+    return this;
+  }
+
+  get result() {
+    return this.element;
+  }
+}
+
+
+let p1 = new DomBuilder().create('p').withId('p1').withClass('text').withContent('Hello,').result;
+let p2 = new DomBuilder().create('p').withId('p2').withClass('text').withContent('world!').result;
+
+let div = new DomBuilder().create('div').withId('main').withClass('container').withChild(p1).withChild(p2).result;
+
+console.log(div.print());
+
+    </script>
+</body>
+</html>

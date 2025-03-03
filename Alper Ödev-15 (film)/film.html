@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+  <style>
+    #loading {
+      display: none;
+      text-align: center;
+    }
+    #movies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .movie-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 200px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Movie Search</h1>
+    <form id="searchForm">
+      <input type="text" id="title" placeholder="Enter movie title" required />
+      <select id="type">
+        <option value="">All</option>
+        <option value="movie">Movies</option>
+        <option value="series">Series</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div id="loading">Loading...</div>
+    <div id="movies"></div>
+    <button id="loadMore" class="hidden">More</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden">
+    <div id="modalContent">
+      <button id="closeModal">Close</button>
+      <div id="modalLoading">Loading...</div>
+      <div id="movieDetails" class="hidden"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+<style>
+
+</style>
+<script>
+    class MovieService {
+  constructor(apiKey, baseUrl = "http://www.omdbapi.com/") {
+    this.apiKey = apiKey;
+    this.baseUrl = baseUrl;
+  }
+
+  async search(title, type = "", page = 1) {
+    const url = `${this.baseUrl}?apikey=${this.apiKey}&s=${title}&type=${type}&page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.Response === "False") throw new Error(data.Error);
+    return data.Search; // Filmler dizisi
+  }
+
+  async getMovie(movieId) {
+    const url = `${this.baseUrl}?apikey=${this.apiKey}&i=${movieId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.Response === "False") throw new Error(data.Error);
+    return data; // Film detayları
+  }
+}
+const apiKey = "YOUR_API_KEY"; 
+const movieService = new MovieService(apiKey);
+
+const searchForm = document.getElementById("searchForm");
+const titleInput = document.getElementById("title");
+const typeSelect = document.getElementById("type");
+const loadingDiv = document.getElementById("loading");
+const moviesDiv = document.getElementById("movies");
+const loadMoreButton = document.getElementById("loadMore");
+
+const modal = document.getElementById("modal");
+const modalContent = document.getElementById("movieDetails");
+const modalLoading = document.getElementById("modalLoading");
+const closeModal = document.getElementById("closeModal");
+
+let currentPage = 1;
+let currentSearch = "";
+
+
+const showLoading = () => loadingDiv.style.display = "block";
+const hideLoading = () => loadingDiv.style.display = "none";
+
+const renderMovies = (movies) => {
+  movies.forEach((movie) => {
+    const movieCard = document.createElement("div");
+    movieCard.classList.add("movie-card");
+    movieCard.innerHTML = `
+      <img src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}" />
+      <h3>${movie.Title}</h3>
+      <button data-id="${movie.imdbID}" class="details-button">Details</button>
+    `;
+    moviesDiv.appendChild(movieCard);
+  });
+};
+
+const clearMovies = () => {
+  moviesDiv.innerHTML = "";
+};
+
+
+searchForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  clearMovies();
+  currentSearch = titleInput.value;
+  currentPage = 1;
+
+  showLoading();
+  try {
+    const movies = await movieService.search(currentSearch, typeSelect.value, currentPage);
+    renderMovies(movies);
+    loadMoreButton.classList.remove("hidden");
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    hideLoading();
+  }
+});
+
+
+loadMoreButton.addEventListener("click", async () => {
+  currentPage++;
+  loadMoreButton.disabled = true;
+  showLoading();
+
+  try {
+    const movies = await movieService.search(currentSearch, typeSelect.value, currentPage);
+    renderMovies(movies);
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    loadMoreButton.disabled = false;
+    hideLoading();
+  }
+});
+
+
+moviesDiv.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("details-button")) return;
+
+  const movieId = e.target.dataset.id;
+
+  modal.classList.remove("hidden");
+  modalContent.classList.add("hidden");
+  modalLoading.style.display = "block";
+
+  try {
+    const movieDetails = await movieService.getMovie(movieId);
+    modalContent.innerHTML = `
+      <h2>${movieDetails.Title}</h2>
+      <p>${movieDetails.Plot}</p>
+    `;
+    modalContent.classList.remove("hidden");
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    modalLoading.style.display = "none";
+  }
+});
+
+// Modali kapatma
+closeModal.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+</script>

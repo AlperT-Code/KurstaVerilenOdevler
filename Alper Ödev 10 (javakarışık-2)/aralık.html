@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+</head>
+<body>
+    <form onsubmit="printRange(event)">
+        <label for="start">Başlangıç Sayısı:</label>
+        <input type="number" id="start" name="start" required>
+        <label for="end">Bitiş Sayısı:</label>
+        <input type="number" id="end" name="end" required>
+        <button type="submit">Yazdır</button>
+    </form>
+    <p id="resultAscending"></p>
+    <p id="resultDescending"></p>
+
+    <script>
+        function printRange(event) {
+            event.preventDefault(); 
+            const start = parseInt(document.getElementById("start").value);
+            const end = parseInt(document.getElementById("end").value);
+
+           
+            const ascending = [];
+            for (let i = start; i <= end; i++) {
+                ascending.push(i);
+            }
+            document.getElementById("resultAscending").innerText = "Doğru Sıra: " + ascending.join(", ");
+
+           
+            const descending = [];
+            for (let i = end; i >= start; i--) {
+                descending.push(i);
+            }
+            document.getElementById("resultDescending").innerText = "Ters Sıra: " + descending.join(", ");
+        }
+    </script>
+</body>
+</html>

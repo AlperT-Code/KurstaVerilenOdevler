@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hesap() {
+  let arama = parseFloat(prompt("Konuşma maliyetini girin:"));
+  let arama3 = prompt("Operatörünüzü seçin (Türk Telekom, Vodafone, Türkcell):");
+  let arama2 = prompt("Aradığınız operatörü seçin (Türk Telekom, Vodafone, Türkcell):");
+
+  let fiyat = arama;
+
+  if (arama3 === "Türk Telekom" && arama2 === "Türk Telekom") {
+    fiyat *= 1.1;
+  } else if (arama3 === "Vodafone" && arama2 === "Vodafone") {
+    fiyat *= 1.15;
+  } else if (arama3 === "Türkcell" && arama2 === "Türkcell") {
+    fiyat *= 1.2;
+  }
+
+  alert(`Konuşma maliyeti: ${fiyat} TL`);
+}
+
+hesap();
+
+    </script>
+</body>
+</html>

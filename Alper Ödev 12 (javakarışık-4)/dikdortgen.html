@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dikdörtgen Alan Hesaplama</title>
+    <script>
+        
+        function alanHesapla() {
+            const uzunluk = prompt("Dikdörtgenin uzunluğunu girin:");
+            const genislik = prompt("Dikdörtgenin genişliğini girin:");
+
+        
+            const uzunlukSayisi = parseFloat(uzunluk);
+            const genislikSayisi = parseFloat(genislik);
+
+            if (isNaN(uzunlukSayisi) || isNaN(genislikSayisi)) {
+                alert("Lütfen geçerli sayılar girin!");
+                return;
+            }
+
+            const alan = uzunlukSayisi * genislikSayisi;
+            alert("Dikdörtgenin Alanı: " + alan + " birim²");
+        }
+    </script>
+</head>
+<body>
+    <h2>Dikdörtgen Alan Hesaplama</h2>
+    <button onclick="alanHesapla()">Alanı Hesapla</button>
+</body>
+</html>

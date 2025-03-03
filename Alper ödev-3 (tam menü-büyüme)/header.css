@@ -1,0 +1,20 @@
+table{
+    
+    margin: -10px;
+    border-collapse: collapse;
+    border: salmon;
+
+}
+th,td{
+    padding: 40px;
+    border: 20px rgb(215, 159, 153);
+    font-size: 30px;
+    
+}
+td {
+    border: 2px saddlebrown;
+}
+.table-content{
+    height: 100%;
+    width: 100%;
+}

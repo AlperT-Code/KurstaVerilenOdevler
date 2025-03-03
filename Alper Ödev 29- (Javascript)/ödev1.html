@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fiz() {
+  let num = parseInt(prompt("1 ile 100 arasında bir sayı girin:"));
+
+  if (num >= 1 && num <= 100) {
+    if (num % 3 === 0 && num % 5 === 0) {
+      alert("Fizz Buzz");
+    } 
+    else if (num % 3 === 0) {
+        alert("Fizz");
+    } 
+    else if (num % 5 === 0) {
+        alert("Buzz");
+    } 
+    else {
+        alert(num);
+    }
+  } else {
+    alert("Hata: Lütfen 1 ile 100 arasında bir sayı girin.");
+  }
+}
+
+fiz();
+
+    </script>
+</body>
+</html>

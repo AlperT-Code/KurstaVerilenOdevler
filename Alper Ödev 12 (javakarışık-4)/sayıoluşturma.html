@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakamları Birleştir</title>
+    <script>
+        function sayiyaDonustur(rakam1, rakam2, rakam3) {
+            return rakam1 * 100 + rakam2 * 10 + rakam3;
+        }
+
+        function sonucuGoster() {
+            const rakam1 = parseInt(document.getElementById("rakam1").value);
+            const rakam2 = parseInt(document.getElementById("rakam2").value);
+            const rakam3 = parseInt(document.getElementById("rakam3").value);
+
+            if (
+                isNaN(rakam1) || isNaN(rakam2) || isNaN(rakam3) ||
+                rakam1 < 0 || rakam1 > 9 ||
+                rakam2 < 0 || rakam2 > 9 ||
+                rakam3 < 0 || rakam3 > 9
+            ) {
+                document.getElementById("sonuc").textContent = "Lütfen 0-9 arasında geçerli rakamlar girin.";
+                return;
+            }
+
+            const sonuc = sayiyaDonustur(rakam1, rakam2, rakam3);
+            document.getElementById("sonuc").textContent = "Oluşan Sayı: " + sonuc;
+        }
+    </script>
+</head>
+<body>
+    <h2>Rakamları Birleştirerek Sayıya Dönüştür</h2>
+    <label for="rakam1">Birinci Rakam:</label>
+    <input type="number" id="rakam1" min="0" max="9" required>
+    <br><br>
+    <label for="rakam2">İkinci Rakam:</label>
+    <input type="number" id="rakam2" min="0" max="9" required>
+    <br><br>
+    <label for="rakam3">Üçüncü Rakam:</label>
+    <input type="number" id="rakam3" min="0" max="9" required>
+    <br><br>
+    <button onclick="sonucuGoster()">Sayıya Dönüştür</button>
+    <p id="sonuc"></p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+baslangic = int(input("Birinci sayıyı girin: "))
+bitis = int(input("İkinci sayıyı giriniz girin: "))
+print(f"{baslangic} ile {bitis} 7'ye bölünebilen sayılar:")
+for sayi in range(baslangic, bitis + 1):
+    if sayi % 7 == 0:
+        print(sayi)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <script>
+    
+        function zamaniSaniyeyeDonustur(saat, dakika, saniye) {
+            return saat * 3600 + dakika * 60 + saniye;
+        }
+
+        
+        function saniyeyiZamanaDonustur(saniye) {
+            const saat = Math.floor(saniye / 3600);
+            saniye %= 3600;
+            const dakika = Math.floor(saniye / 60);
+            saniye %= 60;
+            return String(saat).padStart(2, '0') + ":" + 
+                   String(dakika).padStart(2, '0') + ":" + 
+                   String(saniye).padStart(2, '0');
+        }
+
+       
+        function tarihFarki(sa1, dk1, sn1, sa2, dk2, sn2) {
+            const tarih1Saniye = zamaniSaniyeyeDonustur(sa1, dk1, sn1);
+            const tarih2Saniye = zamaniSaniyeyeDonustur(sa2, dk2, sn2);
+            const fark = Math.abs(tarih1Saniye - tarih2Saniye);
+            return saniyeyiZamanaDonustur(fark);
+        }
+
+       
+        function sonucuGoster() {
+            const sa1 = parseInt(document.getElementById("saat1").value);
+            const dk1 = parseInt(document.getElementById("dakika1").value);
+            const sn1 = parseInt(document.getElementById("saniye1").value);
+            const sa2 = parseInt(document.getElementById("saat2").value);
+            const dk2 = parseInt(document.getElementById("dakika2").value);
+            const sn2 = parseInt(document.getElementById("saniye2").value);
+
+            if (isNaN(sa1) || isNaN(dk1) || isNaN(sn1) || isNaN(sa2) || isNaN(dk2) || isNaN(sn2)) {
+                document.getElementById("sonuc").textContent = "Lütfen geçerli değerler girin.";
+                return;
+            }
+
+            const farkSonucu = tarihFarki(sa1, dk1, sn1, sa2, dk2, sn2);
+            document.getElementById("sonuc").textContent = "Tarih Farkı: " + farkSonucu;
+        }
+    </script>
+</head>
+<body>
+    
+    <h3>Birinci Tarih</h3>
+    <label for="saat1">Saat:</label>
+    <input type="number" id="saat1" min="0">
+    <label for="dakika1">Dakika:</label>
+    <input type="number" id="dakika1" min="0">
+    <label for="saniye1">Saniye:</label>
+    <input type="number" id="saniye1" min="0">
+    
+    <h3>İkinci Tarih</h3>
+    <label for="saat2">Saat:</label>
+    <input type="number" id="saat2" min="0">
+    <label for="dakika2">Dakika:</label>
+    <input type="number" id="dakika2" min="0">
+    <label for="saniye2">Saniye:</label>
+    <input type="number" id="saniye2" min="0">
+    
+    <br><br>
+    <button onclick="sonucuGoster()">Tarih Farkını Hesapla</button>
+    <p id="sonuc"></p>
+</body>
+</html>

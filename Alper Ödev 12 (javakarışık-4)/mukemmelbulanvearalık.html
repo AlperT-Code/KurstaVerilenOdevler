@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mükemmel Sayı Kontrolü</title>
+    <script>
+        
+        function mukemmelMi(sayi) {
+            let toplam = 0;
+            for (let i = 1; i <= sayi / 2; i++) {
+                if (sayi % i === 0) {
+                    toplam += i;
+                }
+            }
+            return toplam === sayi;
+        }
+
+        
+        function mukemmelSayilariBul(min, max) {
+            let mukemmelSayilar = [];
+            for (let i = min; i <= max; i++) {
+                if (mukemmelMi(i)) {
+                    mukemmelSayilar.push(i);
+                }
+            }
+            return mukemmelSayilar;
+        }
+
+       
+        function sonucuGoster() {
+            const min = parseInt(document.getElementById("min").value);
+            const max = parseInt(document.getElementById("max").value);
+
+            if (isNaN(min) || isNaN(max) || min < 1 || max < 1 || min > max) {
+                document.getElementById("sonuc").textContent = "Lütfen geçerli bir aralık girin.";
+                return;
+            }
+
+            const mukemmelSayilar = mukemmelSayilariBul(min, max);
+            document.getElementById("sonuc").textContent = 
+                mukemmelSayilar.length > 0 ? "Mükemmel Sayılar: " + mukemmelSayilar.join(", ") 
+                                           : "Bu aralıkta mükemmel sayı yok.";
+        }
+    </script>
+</head>
+<body>
+    <h2>Aralıktaki Mükemmel Sayıları Bul</h2>
+    <label for="min">Minimum Değer:</label>
+    <input type="number" id="min" min="1" required>
+    <br><br>
+    <label for="max">Maksimum Değer:</label>
+    <input type="number" id="max" min="1" required>
+    <br><br>
+    <button onclick="sonucuGoster()">Mükemmel Sayıları Göster</button>
+    <p id="sonuc"></p>
+</body>
+</html>

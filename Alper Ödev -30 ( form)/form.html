@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Doğrulama ve Mağaza Yönetimi</title>
+    <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .form-container {
+            border: 2px solid #d2b48c;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff8dc;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: red;
+            margin-left: 10px;
+        }
+        .form-section {
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #d2b48c;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Kullanıcı Kaydı</h2>
+        <form id="registerForm" data-parsley-validate>
+            <div class="form-section">
+                <label for="username">Kullanıcı Adı:</label>
+                <input type="text" id="username" name="username" required minlength="4" maxlength="20" data-parsley-pattern="^(?!.*\b(admin|user|test)\b).*$" data-parsley-pattern-message="Kullanıcı adı 'admin', 'user', 'test' olamaz.">
+                <span class="error" data-parsley-errors-container="#usernameError"></span>
+            </div>
+            <div class="form-section">
+                <label for="email">E-posta:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" data-parsley-errors-container="#emailError"></span>
+            </div>
+            <div class="form-section">
+                <label for="password">Şifre:</label>
+                <input type="password" id="password" name="password" required minlength="6" maxlength="30">
+                <span class="error" data-parsley-errors-container="#passwordError"></span>
+            </div>
+            <div class="form-section">
+                <label for="repeatPassword">Şifre Tekrar:</label>
+                <input type="password" id="repeatPassword" name="repeatPassword" required data-parsley-equalto="#password">
+                <span class="error" data-parsley-errors-container="#repeatPasswordError"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Kullanıcı Bilgileri</h2>
+        <form id="infoForm" data-parsley-validate>
+            <div class="form-section">
+                <label for="fullname">Tam Ad:</label>
+                <input type="text" id="fullname" name="fullname" required minlength="2" maxlength="50" pattern="^[a-zA-Z\s-]+$" data-parsley-pattern-message="Tam ad yalnızca harf, boşluk ve tire içerebilir.">
+            </div>
+            <div class="form-section">
+                <label for="avatar">Avatar:</label>
+                <input type="file" id="avatar" name="avatar" required>
+            </div>
+            <div class="form-section">
+                <label for="birthdate">Doğum Günü:</label>
+                <input type="date" id="birthdate" name="birthdate" required min="1900-01-01">
+            </div>
+            <div class="form-section">
+                <label for="gender">Cinsiyet:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Seçiniz</option>
+                    <option value="male">Erkek</option>
+                    <option value="female">Kadın</option>
+                </select>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <script src="https://parsleyjs.org/dist/parsley.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kullanıcı Bilgileri</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container" id="detaylar-kapsayi">
+    <h1 style="font-size: 20px;text-align: left;color: black;">User İnfo</h1>
+    <form id="detaylar-formu">
+      <label for="first-name">Ad:</label>
+      <input type="text" id="ad" name="first-name" placeholder="Adınızı girin">
+      <span class="error-message" id="ad-hata">Geçerli bir ad girin.</span>
+
+      <label for="last-name">Soyad:</label>
+      <input type="text" id="soyad" name="last-name" placeholder="Soyadınızı girin">
+      <span class="error-message" id="soyad-hata">Geçerli bir soyad girin.</span>
+
+      <label for="birth-year">Doğum Yılı:</label>
+      <input type="number" id="dogum-yili" name="birth-year" placeholder="YYYY">
+      <span class="error-message" id="dogum-yili-hata">Geçerli bir yıl girin.</span>
+
+      <label for="gender">Cinsiyet:</label>
+      <select id="cinsiyet" name="gender">
+        <option value="">Seçiniz</option>
+        <option value="male">Erkek</option>
+        <option value="female">Kadın</option>
+        <option value="Kuzu Çevirme">Kuzu Çevirme</option>
+      </select>
+      <span class="error-message" id="cinsiyet-hata">Cinsiyet seçimi zorunludur.</span>
+
+      <label for="phone">Telefon (isteğe bağlı):</label>
+      <input type="text" id="telefon" name="phone" placeholder="Telefon numaranızı girin">
+
+      <label for="skype">Skype (isteğe bağlı):</label>
+      <input type="text" id="skype" name="skype" placeholder="Skype adresinizi girin">
+
+      <div>
+        <button type="button" id="kaydet-btn">Kaydet</button>
+        <button type="button" class="exit" id="cikis-btn">Çıkış Yap</button>
+      </div>
+    </form>
+  </div>
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.form-container {
+  width: 700px;
+  padding: 20px;
+  background: #f0e4d7;  
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-container button {
+  width: 100px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-container button.exit {
+  background-color: gray;
+  width: 100px;
+}
+
+.form-container button:hover {
+  opacity: 0.9;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  display: none;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  display: none;
+}
+
+#detaylara-gec {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+}
+
+#detaylara-gec:hover {
+  text-decoration: underline;
+}
+
+</style>
+  <script>
+   
+function setCookie(name, value, hours) {
+  let date = new Date();
+  date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+  document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
+}
+
+function getCookie(name) {
+  let cookieArr = document.cookie.split(';');
+  for (let cookie of cookieArr) {
+    let [key, value] = cookie.trim().split('=');
+    if (key === name) return value;
+  }
+  return null;
+}
+
+function deleteCookie(name) {
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+}
+
+const kaydetBtn = document.getElementById('kaydet-btn');
+const cikisBtn = document.getElementById('cikis-btn');
+
+const adInput = document.getElementById('ad');
+const soyadInput = document.getElementById('soyad');
+const dogumYiliInput = document.getElementById('dogum-yili');
+const cinsiyetInput = document.getElementById('cinsiyet');
+const telefonInput = document.getElementById('telefon');
+const skypeInput = document.getElementById('skype');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ad = getCookie('ad');
+  const soyad = getCookie('soyad');
+  const dogumYili = getCookie('dogumYili');
+  const cinsiyet = getCookie('cinsiyet');
+
+  if (ad && soyad && dogumYili && cinsiyet) {
+    adInput.value = ad;
+    soyadInput.value = soyad;
+    dogumYiliInput.value = dogumYili;
+    cinsiyetInput.value = cinsiyet;
+  }
+
+});
+
+
+
+function saveUserDetails() {
+  const ad = adInput.value;
+  const soyad = soyadInput.value;
+  const dogumYili = dogumYiliInput.value;
+  const cinsiyet = cinsiyetInput.value;
+
+  let isValid = true;
+
+  if (!ad) {
+    isValid = false;
+  }
+
+  if (!soyad) {
+    isValid = false;
+  }
+
+  if (!dogumYili || isNaN(dogumYili) || dogumYili < 1900 || dogumYili > new Date().getFullYear()) {
+    isValid = false;
+  }
+
+  if (!cinsiyet) {
+    isValid = false;
+  }
+
+  if (isValid) {
+    setCookie('ad', ad, 24);
+    setCookie('soyad', soyad, 24);
+    setCookie('dogumYili', dogumYili, 24);
+    setCookie('cinsiyet', cinsiyet, 24);
+    alert('Bilgiler başarıyla kaydedildi!');
+  }
+}
+
+kaydetBtn.addEventListener('click', saveUserDetails);
+
+
+function logout() {
+  deleteCookie('ad');
+  deleteCookie('soyad');
+  deleteCookie('dogumYili');
+  deleteCookie('cinsiyet');
+    
+}
+
+cikisBtn.addEventListener('click', logout);
+
+  </script>
+</body>
+</html>

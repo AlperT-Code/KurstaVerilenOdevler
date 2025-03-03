@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenişletDate Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .output {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>GenişletDate Sınıfı Testi</h1>
+  <label for="dateInput">Tarih Seç:</label>
+  <input type="date" id="dateInput" />
+  <button id="initializeDate">Başlat</button>
+  <div class="output">
+    <strong>Sonuç:</strong>
+    <p id="output"></p>
+  </div>
+
+  <h2>Operasyonlar</h2>
+  <button id="showDate">showDate()</button>
+  <button id="isFuture">isFuture()</button>
+  <button id="isLeapYear">isLeapYear()</button>
+  <button id="nextDay">nextDay()</button>
+  <script src="script.js"></script>
+  <script>
+    class GenişletDate {
+  constructor(date) {
+    if (!(date instanceof Date)) {
+      throw new Error("Geçerli bir Date nesnesi verilmeli.");
+    }
+    this.date = date;
+  }
+
+  showDate() {
+    const options = { day: "numeric", month: "long" };
+    return this.date.toLocaleDateString("tr-TR", options);
+  }
+
+  isFuture() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return this.date > today;
+  }
+
+  isLeapYear() {
+    const year = this.date.getFullYear();
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
+
+  nextDay() {
+    const nextDate = new Date(this.date);
+    nextDate.setDate(this.date.getDate() + 1);
+    return new GenişletDate(nextDate); // Yeni bir GenişletDate nesnesi döndürür
+  }
+}
+
+
+const dateInput = document.getElementById("dateInput");
+const initializeDateButton = document.getElementById("initializeDate");
+const outputElem = document.getElementById("output");
+const showDateButton = document.getElementById("showDate");
+const isFutureButton = document.getElementById("isFuture");
+const isLeapYearButton = document.getElementById("isLeapYear");
+const nextDayButton = document.getElementById("nextDay");
+
+let genişletDateInstance;
+
+
+const displayOutput = (message) => {
+  outputElem.textContent = message;
+};
+
+
+initializeDateButton.addEventListener("click", () => {
+  const selectedDate = new Date(dateInput.value);
+  if (isNaN(selectedDate)) {
+    displayOutput("Lütfen geçerli bir tarih seçin.");
+    return;
+  }
+  genişletDateInstance = new GenişletDate(selectedDate);
+  displayOutput(`Başlangıç tarihi: ${selectedDate.toLocaleDateString("tr-TR")}`);
+});
+
+
+showDateButton.addEventListener("click", () => {
+  if (!genişletDateInstance) {
+    displayOutput("Önce bir tarih başlatın.");
+    return;
+  }
+  displayOutput(`Tarih: ${genişletDateInstance.showDate()}`);
+});
+
+
+isFutureButton.addEventListener("click", () => {
+  if (!genişletDateInstance) {
+    displayOutput("Önce bir tarih başlatın.");
+    return;
+  }
+  const result = genişletDateInstance.isFuture();
+  displayOutput(result ? "Gelecek bir tarih." : "Geçmiş bir tarih.");
+});
+
+
+isLeapYearButton.addEventListener("click", () => {
+  if (!genişletDateInstance) {
+    displayOutput("Önce bir tarih başlatın.");
+    return;
+  }
+  const result = genişletDateInstance.isLeapYear();
+  displayOutput(result ? "Artık yıl." : "Artık yıl değil.");
+});
+
+
+nextDayButton.addEventListener("click", () => {
+  if (!genişletDateInstance) {
+    displayOutput("Önce bir tarih başlatın.");
+    return;
+  }
+  genişletDateInstance = genişletDateInstance.nextDay();
+  displayOutput(`Sonraki gün: ${genişletDateInstance.showDate()}`);
+});
+
+  </script>
+</body>
+</html>

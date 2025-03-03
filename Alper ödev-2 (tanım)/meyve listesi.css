@@ -1,0 +1,16 @@
+.container{
+    margin-right : 180px;
+    margin-left: 2px;
+    padding-block-end: 5px;
+    padding-block-start: 5px;
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
+    background-color: rgb(241, 128, 128) ;
+    border-right: 100px;
+    border-left: 100px;
+    border-bottom: 100px;
+    font-size: 20px;
+    font-style: italic;
+    
+}
+  

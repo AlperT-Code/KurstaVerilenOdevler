@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rgb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefaf4;
+            text-align: center;
+            margin: 0;
+        }
+        h2, h3 {
+            margin: 20px 0;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, select, button {
+            margin-bottom: 15px;
+            padding: 8px;
+            width: 100%;
+        }
+        .color-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            color: #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            width: 200px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="font-weight: bold;font-size: 60px;">Yeni Renk Oluştur</h2>
+    <form id="colorForm">
+        <label for="name">Renk Adı:</label>
+        <input type="text" id="name" placeholder="Renk Adı" required>
+        <div id="nameError" class="error"></div>
+
+        <label for="type">Tip:</label>
+        <select id="type">
+            <option value="RGB">RGB</option>
+            <option value="RGBA">RGBA</option>
+            <option value="HEX">HEX</option>
+        </select>
+        <div id="typeError" class="error"></div>
+
+        <label for="code">Kod:</label>
+        <input type="text" id="code" placeholder="Örnek: 255, 255, 255">
+        <div id="codeError" class="error"></div>
+
+        <button type="button" id="saveBtn">Kaydet</button>
+    </form>
+
+    <h3>Tüm Renkler</h3>
+    <div id="colorContainer"></div>
+
+    <script>
+        const form = document.getElementById('colorForm');
+        const nameInput = document.getElementById('name');
+        const typeInput = document.getElementById('type');
+        const codeInput = document.getElementById('code');
+        const colorContainer = document.getElementById('colorContainer');
+        const saveBtn = document.getElementById('saveBtn');
+
+        let colorList = getColorsFromCookies();
+        displayColors();
+
+        saveBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const type = typeInput.value;
+            const code = codeInput.value.trim();
+
+            clearErrors();
+
+            const errors = validateInputs(name, type, code);
+            if (errors.length > 0) return;
+
+            if (colorList.find(color => color.name.toLowerCase() === name.toLowerCase())) {
+                showError('nameError', 'Renk adı benzersiz olmalıdır.');
+                return;
+            }
+
+            const newColor = { name, type, code };
+            colorList.push(newColor);
+            setColorsToCookies(colorList);
+            displayColors();
+            form.reset();
+        });
+
+        function validateInputs(name, type, code) {
+            const errors = [];
+            if (!/^[a-zA-ZÇĞİŞÖÜçğışöü]+$/.test(name)) {
+                showError('nameError', 'Ad sadece harflerden oluşmalıdır.');
+                errors.push('name');
+            }
+            if (type === 'RGB' && !/^\d{1,3},\s?\d{1,3},\s?\d{1,3}$/.test(code)) {
+                showError('codeError', 'RGB formatı: 0-255, 0-255, 0-255');
+                errors.push('code');
+            } else if (type === 'RGBA' && !/^\d{1,3},\s?\d{1,3},\s?\d{1,3},\s?(0(\.\d+)?|1(\.0+)?)$/.test(code)) {
+                showError('codeError', 'RGBA formatı: 0-255, 0-255, 0-255, 0-1');
+                errors.push('code');
+            } else if (type === 'HEX' && !/^#[0-9A-Fa-f]{6}$/.test(code)) {
+                showError('codeError', 'HEX formatı: #RRGGBB');
+                errors.push('code');
+            }
+            return errors;
+        }
+
+        function displayColors() {
+            colorContainer.innerHTML = '';
+            colorList.forEach(color => {
+                const box = document.createElement('div');
+                box.className = 'color-box';
+                box.style.backgroundColor = color.type === 'HEX' ? color.code : getColorFromCode(color.type, color.code);
+                box.innerHTML = `
+                    <strong>${color.name.toUpperCase()}</strong><br>
+                    ${color.type}<br>
+                    ${color.code}
+                `;
+                colorContainer.appendChild(box);
+            });
+        }
+
+        function getColorFromCode(type, code) {
+            return type === 'RGBA' ? `rgba(${code})` : `rgb(${code})`;
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(e => e.textContent = '');
+        }
+
+        function showError(id, message) {
+            document.getElementById(id).textContent = message;
+        }
+
+        function setColorsToCookies(colors) {
+            const expires = new Date(Date.now() + 3 * 60 * 60 * 1000).toUTCString();
+            document.cookie = `colors=${JSON.stringify(colors)}; expires=${expires}; path=/`;
+        }
+
+        function getColorsFromCookies() {
+            const cookies = document.cookie.split('; ');
+            const colorCookie = cookies.find(row => row.startsWith('colors='));
+            return colorCookie ? JSON.parse(colorCookie.split('=')[1]) : [];
+        }
+    </script>
+</body>
+</html>

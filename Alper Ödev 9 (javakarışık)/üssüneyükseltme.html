@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   rm onsubmit="calculatePower(event)">
+        <label for="base">Taban Sayı:</label>
+        <input type="number" id="base" name="base" required>
+        
+        <label for="exponent">Üs:</label>
+        <input type="number" id="exponent" name="exponent" required>
+        
+        <button type="submit">Hesapla</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        function calculatePower(event) {
+            event.preventDefault(); 
+            const base = parseFloat(document.getElementById("base").value);
+            const exponent = parseInt(document.getElementById("exponent").value);
+
+            
+            const result = Math.pow(base, exponent);
+            
+            document.getElementById("result").innerText = `Sonuç: ${result}`;
+        }
+    </script>
+</body>
+</html>

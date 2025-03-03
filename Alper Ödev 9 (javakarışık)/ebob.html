@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    
+</head>
+<body>
+    <button onclick="ebobuBul()">Ebob</button>
+</body>
+<script>
+        function ebobuBul() {
+            const sayi1 = parseInt(prompt("Birinci sayıyı girin:"));
+            const sayi2 = parseInt(prompt("İkinci sayıyı girin:"));
+            let ebob;
+            let a = (sayi1);
+            let b = (sayi2);
+            while (b !== 0) {
+                ebob = b;
+                b = a % b;
+                a = ebob;
+            }
+            alert(`EBOB: ${ebob}`);
+        }
+    </script>
+</html>

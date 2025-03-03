@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dizin Ağaçları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .tree {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .tree-item {
+            margin: 5px 0;
+        }
+        .tree-item ul {
+            display: none; 
+        }
+        .tree-item:hover {
+            font-weight: bold; 
+        }
+        .tree-item button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #007BFF;
+        }
+        .tree-item button:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dizin Ağaçları</h1>
+
+    <ul class="tree">
+        <li class="tree-item">
+            <button onclick="toggleTree(this)">+ Dizin 1</button>
+            <ul>
+                <li class="tree-item">
+                    <button onclick="toggleTree(this)">+ Alt Dizin 1.1</button>
+                    <ul>
+                        <li class="tree-item">Dosya 1.1.1</li>
+                        <li class="tree-item">Dosya 1.1.2</li>
+                    </ul>
+                </li>
+                <li class="tree-item">
+                    <button onclick="toggleTree(this)">+ Alt Dizin 1.2</button>
+                    <ul>
+                        <li class="tree-item">Dosya 1.2.1</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="tree-item">
+            <button onclick="toggleTree(this)">+ Dizin 2</button>
+            <ul>
+                <li class="tree-item">
+                    <button onclick="toggleTree(this)">+ Alt Dizin 2.1</button>
+                    <ul>
+                        <li class="tree-item">Dosya 2.1.1</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        
+        function toggleTree(button) {
+            const ul = button.nextElementSibling;  
+            if (ul.style.display === "none" || ul.style.display === "") {
+                ul.style.display = "block";  
+                button.textContent = "- " + button.textContent.slice(2); 
+            } else {
+                ul.style.display = "none"; 
+                button.textContent = "+ " + button.textContent.slice(2); 
+            }
+        }
+    </script>
+
+</body>
+</html>

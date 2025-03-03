@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bir Sonraki Günün Tarihini Bul</title>
+    <script>
+        function artikYilMi(yil) {
+           
+            return (yil % 4 === 0 && yil % 100 !== 0) || (yil % 400 === 0);
+        }
+
+        function birSonrakiGun(gun, ay, yil) {
+            const gunler = [31, artikYilMi(yil) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
+            gun++;
+            if (gun > gunler[ay - 1]) {
+                gun = 1;
+                ay++;
+                if (ay > 12) {
+                    ay = 1;
+                    yil++;
+                }
+            }
+            
+        
+            return (gun < 10 ? "0" + gun : gun) + "." + 
+                   (ay < 10 ? "0" + ay : ay) + "." + 
+                   yil;
+        }
+
+        function tarihiHesapla() {
+            const gun = parseInt(document.getElementById("gun").value);
+            const ay = parseInt(document.getElementById("ay").value);
+            const yil = parseInt(document.getElementById("yil").value);
+
+            if (isNaN(gun) || isNaN(ay) || isNaN(yil)) {
+                document.getElementById("sonuc").textContent = "Lütfen geçerli bir tarih girin.";
+                return;
+            }
+
+            const sonrakiGun = birSonrakiGun(gun, ay, yil);
+            document.getElementById("sonuc").textContent = "Bir sonraki gün: " + sonrakiGun;
+        }
+    </script>
+</head>
+<body>
+    <h2>Bir Sonraki Günü Bul</h2>
+    <label for="gun">Gün:</label>
+    <input type="number" id="gun" min="1" max="31" required>
+    <br><br>
+    <label for="ay">Ay:</label>
+    <input type="number" id="ay" min="1" max="12" required>
+    <br><br>
+    <label for="yil">Yıl:</label>
+    <input type="number" id="yil" min="1" required>
+    <br><br>
+    <button onclick="tarihiHesapla()">Bir Sonraki Günü Göster</button>
+    <p id="sonuc"></p>
+</body>
+</html>

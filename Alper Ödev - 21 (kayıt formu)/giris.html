@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kullanıcı Kaydı</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container" id="form-kapsayi">
+    <h1 style="font-size: 20px;text-align: left;color: black;">Registration</h1>
+    <form id="kayit-formu">
+      <label for="email">E-posta:</label>
+      <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin">
+      <span class="error-message" id="email-hata">Geçerli bir e-posta girin.</span>
+
+      <label for="password">Şifre:</label>
+      <input type="password" id="sifre" name="password" placeholder="Şifrenizi girin">
+      <span class="error-message" id="sifre-hata">Şifre kurallara uygun değil.</span>
+
+      <label for="confirm-password">Şifre Onayı:</label>
+      <input type="password" id="sifre-onayi" name="confirm-password" placeholder="Şifreyi tekrar girin">
+      <span class="error-message" id="sifre-onayi-hata">Şifreler uyuşmuyor.</span>
+
+      <button type="button" id="kayit-btn">Sign Up</button>
+      <span class="success-message" id="kayit-basarili">Başarıyla kaydoldunuz. <a href="giris2.html">Kayıta Devam Ediniz...</a></span>
+      <br>
+    </form>
+  </div>
+
+  <script src="giris.js"></script>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.form-container {
+  width: 500px;
+  padding: 20px;
+  background: #f0e4d7; 
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-container button {
+  width: 100px;
+  padding: 10px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-container button.exit {
+  background-color: #dc3545;
+}
+
+.form-container button:hover {
+  opacity: 0.9;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  display: none;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  display: none;
+}
+
+#detaylara-gec {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+}
+
+#detaylara-gec:hover {
+  text-decoration: underline;
+}
+
+  </style>
+   <script>
+  
+function setCookie(name, value, hours) {
+  let date = new Date();
+  date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+  document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
+}
+
+
+function getCookie(name) {
+  let cookieArr = document.cookie.split(';');
+  for (let cookie of cookieArr) {
+    let [key, value] = cookie.trim().split('=');
+    if (key === name) return value;
+  }
+  return null;
+}
+
+
+function deleteCookie(name) {
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+}
+
+const kayitBtn = document.getElementById('kayit-btn');
+const emailInput = document.getElementById('email');
+const sifreInput = document.getElementById('sifre');
+const sifreOnayiInput = document.getElementById('sifre-onayi');
+const emailHata = document.getElementById('email-hata');
+const sifreHata = document.getElementById('sifre-hata');
+const sifreOnayiHata = document.getElementById('sifre-onayi-hata');
+const kayitBasarili = document.getElementById('kayit-basarili');
+
+
+function validateRegistration() {
+  const email = emailInput.value;
+  const sifre = sifreInput.value;
+  const sifreOnayi = sifreOnayiInput.value;
+
+  let isValid = true;
+
+
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailPattern.test(email)) {
+    emailHata.style.display = 'inline';
+    isValid = false;
+  } else {
+    emailHata.style.display = 'none';
+  }
+
+
+  const sifrePattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+  if (!sifrePattern.test(sifre)) {
+    sifreHata.style.display = 'inline';
+    isValid = false;
+  } else {
+    sifreHata.style.display = 'none';
+  }
+
+  if (sifre !== sifreOnayi) {
+    sifreOnayiHata.style.display = 'inline';
+    isValid = false;
+  } else {
+    sifreOnayiHata.style.display = 'none';
+  }
+
+
+  if (isValid) {
+    setCookie('email', email, 1);
+    setCookie('sifre', sifre, 1);
+    kayitBasarili.style.display = 'inline';
+    setTimeout(() => {
+      kayitBasarili.style.display = 'none';
+    }, 3000);
+  }
+}
+
+kayitBtn.addEventListener('click', validateRegistration);
+
+   </script>
+</body>
+</html>

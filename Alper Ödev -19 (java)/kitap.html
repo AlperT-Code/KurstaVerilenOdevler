@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitap Listesi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        li.selected {
+            background-color: #ffd580; 
+        }
+        li.active {
+            color: orange; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kitap Listesi::</h1>
+
+    <ul id="bookList">
+        <li class="book">Güzel ve Çirkin</li>
+        <li class="book">Alper Nasıl Zengin oldu?</li>
+        <li class="book">Alperin hayatı</li>
+        <li class="book">Messi nin hayatı</li>
+        <li class="book">Ronaldonun hayatı</li>
+    </ul>
+
+    <script>
+        let lastClicked = null;
+        const bookList = document.getElementById('bookList');
+        const books = bookList.getElementsByClassName('book');
+
+       
+        for (let book of books) {
+            book.addEventListener('click', function(event) {
+                const isCtrlPressed = event.ctrlKey;
+                const isShiftPressed = event.shiftKey;
+
+             
+                if (isCtrlPressed) {
+                    book.classList.toggle('selected');
+                }
+
+                
+                else if (isShiftPressed && lastClicked) {
+                    let startIndex = Array.from(books).indexOf(lastClicked);
+                    let endIndex = Array.from(books).indexOf(book);
+                    let range = [startIndex, endIndex].sort((a, b) => a - b);
+
+                   
+                    for (let i = range[0]; i <= range[1]; i++) {
+                        books[i].classList.add('selected');
+                    }
+                }
+
+                
+                else {
+                    
+                    for (let b of books) {
+                        b.classList.remove('active');
+                    }
+                    book.classList.add('active');
+                }
+
+              
+                lastClicked = book;
+            });
+        }
+    </script>
+
+</body>
+</html>
